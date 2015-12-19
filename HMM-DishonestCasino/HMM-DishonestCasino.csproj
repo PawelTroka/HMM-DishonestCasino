@@ -53,6 +53,7 @@
     <Compile Include="Casino\Probabilities.cs" />
     <Compile Include="Casino\LoadedDice.cs" />
     <Compile Include="CasinoState.cs" />
+    <Compile Include="Collections\MatrixHashTable.cs" />
     <Compile Include="Controls\DataGridViewNumericUpDownElements\DataGridViewNumericUpDownCell.cs" />
     <Compile Include="Controls\DataGridViewNumericUpDownElements\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="Controls\DataGridViewNumericUpDownElements\DataGridViewNumericUpDownEditingControl.cs">

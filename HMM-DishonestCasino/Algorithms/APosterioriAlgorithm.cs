@@ -2,7 +2,7 @@ using System;
 
 namespace HMMDishonestCasino.Algorithms
 {
-    internal class APosterioriAlgorithm : BaseAlgorithm
+    public class APosterioriAlgorithm<TObservation, TState> : BaseAlgorithm<TObservation, TState>
     {
         public override void DoWork()
         {
