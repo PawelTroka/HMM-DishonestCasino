@@ -59,6 +59,15 @@ namespace HMMDishonestCasino
         private void EmitButton_Click(object sender, EventArgs e)
         {
             casino.ValidateState();
+
+            if (clearOutputsCheckBox.Checked)
+            {
+                outputSequenceListBox.Items.Clear();
+                //dataGridView1.Rows.Clear();
+                //dataGridView1.Columns.Clear();
+
+            }
+
             if (emitNTimesCheckBox.Checked)
                 for (var i = 0; i < nTimesNumericUpDown.Value; i++)
                 {
@@ -98,36 +107,21 @@ namespace HMMDishonestCasino
 
         private void makeComparisonButton_Click(object sender, EventArgs e)
         {
+            dataGridView1.Rows.Clear();
+
             InitAlgorithms();
             viterbiAlgorithm.DoWork();
             aposterioriAlgorithm.DoWork();
-            
-            
-            var dataGridRows = new DataGridViewRow[4];
-            for (int i = 0; i < dataGridRows.Length; i++)
-            {
-                dataGridRows[i] = new DataGridViewRow();
-            }
-
 
             for (int index  = 0; index < casino.History.Count; index++)
             {
-                dataGridView1.Columns.Add(index.ToString(),"");
-                dataGridRows[0].Cells.Add(new DataGridViewTextBoxCell() {Value = casino.History[index].Result });
-
-                dataGridRows[1].Cells.Add(new DataGridViewTextBoxCell() { Value = viterbiAlgorithm.Output[index] });
-                dataGridRows[2].Cells.Add(new DataGridViewTextBoxCell() { Value = casino.History[index].StateSpace });
-               // dataGridRows[3].Cells.Add(new DataGridViewTextBoxCell() { Value = aposterioriAlgorithm.Output[index] });
-            }
-
-
-            for (int index = 0; index < dataGridRows.Length-1; index++)
-            {
-                dataGridView1.Rows.Add(dataGridRows[index]);
+                dataGridView1.Rows.Add(casino.History[index].Result, viterbiAlgorithm.Output[index],
+                    casino.History[index].StateSpace
+                    /*, aposterioriAlgorithm.Output[index]*/);
             }
 
             var sumOfViterbiMatches = 0.0;
-            var sumOfAposterioriMatches =0.0;
+            var sumOfAposterioriMatches = 0.0;
             for (int i = 0; i < casino.History.Count; i++)
             {
                 sumOfViterbiMatches += (casino.History[i].StateSpace == viterbiAlgorithm.Output[i]) ? 1 : 0;

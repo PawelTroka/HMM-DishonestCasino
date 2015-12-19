@@ -47,6 +47,7 @@ namespace HMMDishonestCasino
             this.switchToUnfairDiceProbabilityNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.clearOutputsCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.makeComparisonButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -58,6 +59,10 @@ namespace HMMDishonestCasino
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewNumericUpDownColumn1 = new HMMDishonestCasino.Controls.DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.probalbilitiesOfEachNumberDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nTimesNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfSidesNumericUpDown)).BeginInit();
@@ -323,6 +328,7 @@ namespace HMMDishonestCasino
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.clearOutputsCheckBox);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.makeComparisonButton);
             this.panel2.Controls.Add(this.emitNTimesCheckBox);
@@ -333,6 +339,19 @@ namespace HMMDishonestCasino
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(970, 122);
             this.panel2.TabIndex = 10;
+            // 
+            // clearOutputsCheckBox
+            // 
+            this.clearOutputsCheckBox.AutoSize = true;
+            this.clearOutputsCheckBox.Checked = true;
+            this.clearOutputsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.clearOutputsCheckBox.Location = new System.Drawing.Point(507, 81);
+            this.clearOutputsCheckBox.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.clearOutputsCheckBox.Name = "clearOutputsCheckBox";
+            this.clearOutputsCheckBox.Size = new System.Drawing.Size(272, 29);
+            this.clearOutputsCheckBox.TabIndex = 7;
+            this.clearOutputsCheckBox.Text = "Clear outputs before emit";
+            this.clearOutputsCheckBox.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -403,6 +422,11 @@ namespace HMMDishonestCasino
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
@@ -453,6 +477,48 @@ namespace HMMDishonestCasino
             0,
             0});
             this.dataGridViewNumericUpDownColumn1.Name = "dataGridViewNumericUpDownColumn1";
+            // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column1.FillWeight = 200F;
+            this.Column1.HeaderText = "Emit result";
+            this.Column1.MinimumWidth = 200;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.FillWeight = 200F;
+            this.Column2.HeaderText = "Viterbi prediction";
+            this.Column2.MinimumWidth = 200;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column3
+            // 
+            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column3.FillWeight = 200F;
+            this.Column3.HeaderText = "Real state";
+            this.Column3.MinimumWidth = 200;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column4
+            // 
+            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column4.FillWeight = 200F;
+            this.Column4.HeaderText = "A posteriori prediction";
+            this.Column4.MinimumWidth = 200;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // MainForm
             // 
@@ -520,6 +586,11 @@ namespace HMMDishonestCasino
         private System.Windows.Forms.Button makeComparisonButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.CheckBox clearOutputsCheckBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
     }
 }
 
