@@ -6,7 +6,9 @@ namespace HMMDishonestCasino.Algorithms
     {
         public override void DoWork()
         {
-            throw new NotImplementedException();
+            base.DoWork();
+
+            //throw new NotImplementedException();
         }
     }
 }

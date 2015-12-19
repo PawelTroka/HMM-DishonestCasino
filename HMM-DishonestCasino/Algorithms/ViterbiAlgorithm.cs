@@ -29,12 +29,9 @@ namespace HMMDishonestCasino.Algorithms
 
             for (int i = 1; i < SequenceOfObservations.Length; i++)
             {
-                var observation = SequenceOfObservations[i];
                 foreach (var state in StateSpace)
                 {
-                    var value = max(T1, i - 1, state);
-                    //T1.Select( (kvp,index) => new {kvp})
-                    //T1[].Select((element,index) => )
+                    var value = max(T1, i, state);
                     T1[state][i] = value.max;
                     T2[state][i] = value.argmax;
                 }
@@ -44,19 +41,17 @@ namespace HMMDishonestCasino.Algorithms
             //z_T \gets \arg\max_{k}{(T_1[k,T])} 
             Output[T - 1] = T1.Select((value, index) => new { Value = value, Index = index })
                                 .Aggregate((a, b) => (a.Value.Value[T - 1] > b.Value.Value[T - 1]) ? a : b)
-                                .Value.Key;//T1.Max((kvp) => kvp.Value[T-1])//T1.Select((kvp,index) => new {value=kvp.Value[T - 1], state=kvp.Key}).Max(state => el.value)
+                                .Value.Key;
 
             for (int i = T - 1; i > 0; i--)
-            {
                 Output[i - 1] = T2[Output[i]][i];
-            }
+            
         }
 
         private dynamic max(Dictionary<TState, decimal[]> T1, int i, TState state)
         {
             var max = decimal.MinValue;
             var argmax = default(TState);
-            //for (int k = 0; k < T1.Length; k++)
             foreach (TState t in StateSpace)
             {
                 var value = T1[t][i - 1] * TransitionMatrix[t, state] * EmmisionMatrix[state, SequenceOfObservations[i]];
@@ -64,9 +59,6 @@ namespace HMMDishonestCasino.Algorithms
                 max = value;
                 argmax = t;
             }
-
-//            if (argmax == decimal.MinusOne)
-  //              throw new Exception();
 
             return new { max, argmax };
         }

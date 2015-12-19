@@ -32,7 +32,7 @@ namespace HMMDishonestCasino
         {
             this.probalbilitiesOfEachNumberDataGridView = new System.Windows.Forms.DataGridView();
             this.NumbersColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProbabilitiesColumn = new DataGridViewNumericUpDownColumn();
+            this.ProbabilitiesColumn = new HMMDishonestCasino.Controls.DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
             this.outputSequenceListBox = new System.Windows.Forms.ListBox();
             this.emitButton = new System.Windows.Forms.Button();
             this.emitNTimesCheckBox = new System.Windows.Forms.CheckBox();
@@ -42,25 +42,37 @@ namespace HMMDishonestCasino
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.switchToFairDiceProbabilityNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.switchToUnfairDiceProbabilityNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.makeComparisonButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewNumericUpDownColumn1 = new DataGridViewNumericUpDownColumn();
+            this.dataGridViewNumericUpDownColumn1 = new HMMDishonestCasino.Controls.DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
             ((System.ComponentModel.ISupportInitialize)(this.probalbilitiesOfEachNumberDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nTimesNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfSidesNumericUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.switchToFairDiceProbabilityNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.switchToUnfairDiceProbabilityNumericUpDown)).BeginInit();
+            this.panel2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // probalbilitiesOfEachNumberDataGridView
@@ -76,7 +88,7 @@ namespace HMMDishonestCasino
             this.probalbilitiesOfEachNumberDataGridView.Location = new System.Drawing.Point(5, 55);
             this.probalbilitiesOfEachNumberDataGridView.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.probalbilitiesOfEachNumberDataGridView.Name = "probalbilitiesOfEachNumberDataGridView";
-            this.probalbilitiesOfEachNumberDataGridView.Size = new System.Drawing.Size(437, 345);
+            this.probalbilitiesOfEachNumberDataGridView.Size = new System.Drawing.Size(437, 171);
             this.probalbilitiesOfEachNumberDataGridView.TabIndex = 0;
             // 
             // NumbersColumn
@@ -110,16 +122,16 @@ namespace HMMDishonestCasino
             this.outputSequenceListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.outputSequenceListBox.FormattingEnabled = true;
             this.outputSequenceListBox.ItemHeight = 18;
-            this.outputSequenceListBox.Location = new System.Drawing.Point(3, 27);
+            this.outputSequenceListBox.Location = new System.Drawing.Point(3, 3);
             this.outputSequenceListBox.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.outputSequenceListBox.MultiColumn = true;
             this.outputSequenceListBox.Name = "outputSequenceListBox";
-            this.outputSequenceListBox.Size = new System.Drawing.Size(964, 174);
+            this.outputSequenceListBox.Size = new System.Drawing.Size(950, 182);
             this.outputSequenceListBox.TabIndex = 1;
             // 
             // emitButton
             // 
-            this.emitButton.Location = new System.Drawing.Point(14, 18);
+            this.emitButton.Location = new System.Drawing.Point(9, 72);
             this.emitButton.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.emitButton.Name = "emitButton";
             this.emitButton.Size = new System.Drawing.Size(192, 44);
@@ -131,7 +143,7 @@ namespace HMMDishonestCasino
             // emitNTimesCheckBox
             // 
             this.emitNTimesCheckBox.AutoSize = true;
-            this.emitNTimesCheckBox.Location = new System.Drawing.Point(216, 27);
+            this.emitNTimesCheckBox.Location = new System.Drawing.Point(211, 81);
             this.emitNTimesCheckBox.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.emitNTimesCheckBox.Name = "emitNTimesCheckBox";
             this.emitNTimesCheckBox.Size = new System.Drawing.Size(196, 29);
@@ -141,7 +153,7 @@ namespace HMMDishonestCasino
             // 
             // nTimesNumericUpDown
             // 
-            this.nTimesNumericUpDown.Location = new System.Drawing.Point(422, 26);
+            this.nTimesNumericUpDown.Location = new System.Drawing.Point(417, 80);
             this.nTimesNumericUpDown.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.nTimesNumericUpDown.Maximum = new decimal(new int[] {
             1000000000,
@@ -157,7 +169,7 @@ namespace HMMDishonestCasino
             this.nTimesNumericUpDown.Size = new System.Drawing.Size(80, 31);
             this.nTimesNumericUpDown.TabIndex = 4;
             this.nTimesNumericUpDown.Value = new decimal(new int[] {
-            1,
+            100,
             0,
             0,
             0});
@@ -165,7 +177,7 @@ namespace HMMDishonestCasino
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(80, 80);
+            this.label2.Location = new System.Drawing.Point(94, 56);
             this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(256, 25);
@@ -174,7 +186,7 @@ namespace HMMDishonestCasino
             // 
             // numberOfSidesNumericUpDown
             // 
-            this.numberOfSidesNumericUpDown.Location = new System.Drawing.Point(346, 78);
+            this.numberOfSidesNumericUpDown.Location = new System.Drawing.Point(360, 54);
             this.numberOfSidesNumericUpDown.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.numberOfSidesNumericUpDown.Maximum = new decimal(new int[] {
             1000000000,
@@ -205,7 +217,7 @@ namespace HMMDishonestCasino
             this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.groupBox1.Size = new System.Drawing.Size(447, 406);
+            this.groupBox1.Size = new System.Drawing.Size(447, 232);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Unfair dice properties";
@@ -223,7 +235,6 @@ namespace HMMDishonestCasino
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.panel2);
             this.groupBox2.Controls.Add(this.switchToFairDiceProbabilityNumericUpDown);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.switchToUnfairDiceProbabilityNumericUpDown);
@@ -235,21 +246,10 @@ namespace HMMDishonestCasino
             this.groupBox2.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.groupBox2.Size = new System.Drawing.Size(523, 406);
+            this.groupBox2.Size = new System.Drawing.Size(523, 232);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Casino properties";
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.emitNTimesCheckBox);
-            this.panel2.Controls.Add(this.emitButton);
-            this.panel2.Controls.Add(this.nTimesNumericUpDown);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(5, 329);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(513, 71);
-            this.panel2.TabIndex = 10;
             // 
             // switchToFairDiceProbabilityNumericUpDown
             // 
@@ -259,7 +259,7 @@ namespace HMMDishonestCasino
             0,
             0,
             131072});
-            this.switchToFairDiceProbabilityNumericUpDown.Location = new System.Drawing.Point(346, 148);
+            this.switchToFairDiceProbabilityNumericUpDown.Location = new System.Drawing.Point(360, 97);
             this.switchToFairDiceProbabilityNumericUpDown.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.switchToFairDiceProbabilityNumericUpDown.Maximum = new decimal(new int[] {
             1,
@@ -279,7 +279,7 @@ namespace HMMDishonestCasino
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(32, 150);
+            this.label5.Location = new System.Drawing.Point(46, 99);
             this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(304, 25);
@@ -294,7 +294,7 @@ namespace HMMDishonestCasino
             0,
             0,
             131072});
-            this.switchToUnfairDiceProbabilityNumericUpDown.Location = new System.Drawing.Point(346, 225);
+            this.switchToUnfairDiceProbabilityNumericUpDown.Location = new System.Drawing.Point(360, 140);
             this.switchToUnfairDiceProbabilityNumericUpDown.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.switchToUnfairDiceProbabilityNumericUpDown.Maximum = new decimal(new int[] {
             1,
@@ -314,33 +314,121 @@ namespace HMMDishonestCasino
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 227);
+            this.label4.Location = new System.Drawing.Point(22, 142);
             this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(328, 25);
             this.label4.TabIndex = 8;
             this.label4.Text = "Switch to unfair dice probability =";
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.makeComparisonButton);
+            this.panel2.Controls.Add(this.emitNTimesCheckBox);
+            this.panel2.Controls.Add(this.emitButton);
+            this.panel2.Controls.Add(this.nTimesNumericUpDown);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 232);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(970, 122);
+            this.panel2.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(207, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(623, 25);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "- Makes comparison between algorithms outputs and real states";
+            // 
+            // makeComparisonButton
+            // 
+            this.makeComparisonButton.Location = new System.Drawing.Point(9, 19);
+            this.makeComparisonButton.Name = "makeComparisonButton";
+            this.makeComparisonButton.Size = new System.Drawing.Size(192, 44);
+            this.makeComparisonButton.TabIndex = 5;
+            this.makeComparisonButton.Text = "Make comparison";
+            this.makeComparisonButton.UseVisualStyleBackColor = true;
+            this.makeComparisonButton.Click += new System.EventHandler(this.makeComparisonButton_Click);
+            // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.outputSequenceListBox);
+            this.groupBox3.Controls.Add(this.tabControl1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(0, 406);
+            this.groupBox3.Location = new System.Drawing.Point(0, 354);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(970, 204);
+            this.groupBox3.Size = new System.Drawing.Size(970, 256);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Output sequence:";
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(3, 27);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(964, 226);
+            this.tabControl1.TabIndex = 2;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.outputSequenceListBox);
+            this.tabPage1.Location = new System.Drawing.Point(4, 34);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(956, 188);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Emit output";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 34);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(956, 188);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Comparison";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(950, 182);
+            this.dataGridView1.TabIndex = 0;
+            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Controls.Add(this.groupBox2);
+            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(970, 406);
+            this.panel1.Size = new System.Drawing.Size(970, 354);
             this.panel1.TabIndex = 11;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.groupBox1);
+            this.panel3.Controls.Add(this.groupBox2);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(970, 232);
+            this.panel3.TabIndex = 12;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -385,12 +473,17 @@ namespace HMMDishonestCasino
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.switchToFairDiceProbabilityNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.switchToUnfairDiceProbabilityNumericUpDown)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -420,6 +513,13 @@ namespace HMMDishonestCasino
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewNumericUpDownColumn dataGridViewNumericUpDownColumn1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button makeComparisonButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel3;
     }
 }
 

@@ -8,13 +8,13 @@ namespace HMMDishonestCasino
 
     public class CasinoState
     {
-        public CasinoState(bool isLoadedDice, int result)
+        public CasinoState(StateSpace stateSpace, int result)
         {
-            IsLoadedDice = isLoadedDice;
+            StateSpace = stateSpace;
             Result = result;
         }
 
-        public bool IsLoadedDice { get; set; }
+        public StateSpace StateSpace { get; set; }
         public int Result { get; set; }
     }
 }

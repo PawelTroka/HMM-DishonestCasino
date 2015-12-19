@@ -45,7 +45,7 @@ namespace HMMDishonestCasino.Casino
         {
             TrySwitchDice();
             var result = currentDice.Roll();
-            History.Add(new CasinoState(currentDice is LoadedDice, result));
+            History.Add(new CasinoState((currentDice is LoadedDice) ? StateSpace.LoadedDice : StateSpace.FairDice, result));
             return result;
         }
 
