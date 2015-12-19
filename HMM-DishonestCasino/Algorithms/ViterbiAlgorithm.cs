@@ -23,7 +23,7 @@ namespace HMMDishonestCasino.Algorithms
             {
                 T1[state] = new decimal[T];
                 T2[state] = new TState[T];
-                T1[state][0] = ArrayOfInitialProbabilitiesOfStates[state] * EmmisionMatrix[state, SequenceOfObservations[0]];
+                T1[state][0] = ArrayOfInitialProbabilitiesOfStates[state] * EmissionMatrix[state, SequenceOfObservations[0]];
                 T2[state][0] = default(TState);
             }
 
@@ -54,7 +54,7 @@ namespace HMMDishonestCasino.Algorithms
             var argmax = default(TState);
             foreach (TState t in StateSpace)
             {
-                var value = T1[t][i - 1] * TransitionMatrix[t, state] * EmmisionMatrix[state, SequenceOfObservations[i]];
+                var value = T1[t][i - 1] * TransitionMatrix[t, state] * EmissionMatrix[state, SequenceOfObservations[i]];
                 if (value <= max) continue;
                 max = value;
                 argmax = t;
@@ -77,7 +77,7 @@ namespace HMMDishonestCasino.Algorithms
             for (int i = 0; i < StateSpace.Length; i++)
             {
                 var state = StateSpace[i];
-                T1[i, 0] = ArrayOfInitialProbabilitiesOfStates[i] * EmmisionMatrix[i, 0];
+                T1[i, 0] = ArrayOfInitialProbabilitiesOfStates[i] * EmissionMatrix[i, 0];
                 T2[i, 0] = 0;
             }
 
@@ -99,7 +99,7 @@ namespace HMMDishonestCasino.Algorithms
             var argmax = decimal.MinusOne;
             for (int k = 0; k < T1.Length; k++)
             {
-                var value = T1[k, i - 1] * TransitionMatrix[k, j] * EmmisionMatrix[j, i];
+                var value = T1[k, i - 1] * TransitionMatrix[k, j] * EmissionMatrix[j, i];
                 if (value <= max) continue;
                 max = value;
                 argmax = k;

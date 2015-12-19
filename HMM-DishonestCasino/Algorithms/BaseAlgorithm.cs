@@ -1,6 +1,7 @@
 ﻿//#define _USE_ARRAYS_INSTEAD_OF_MATRIX_HASHTABLE
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using HMMDishonestCasino.Collections;
 
 
@@ -22,11 +23,11 @@ namespace HMMDishonestCasino.Algorithms
 
 #if _USE_ARRAYS_INSTEAD_OF_MATRIX_HASHTABLE
         public decimal[,] TransitionMatrix { get; set; } // size K*K
-        public decimal[,] EmmisionMatrix { get; set; } // size K*N
+        public decimal[,] EmissionMatrix { get; set; } // size K*N
         public decimal[] ArrayOfInitialProbabilitiesOfStates { get; set; } // size K
 #else
         public MatrixHashTable<TState, TState,decimal> TransitionMatrix { get; set; } // size K*K
-        public MatrixHashTable<TState, TObservation, decimal> EmmisionMatrix { get; set; } // size K*N
+        public MatrixHashTable<TState, TObservation, decimal> EmissionMatrix { get; set; } // size K*N
         public Dictionary<TState,decimal> ArrayOfInitialProbabilitiesOfStates { get; set; } // size K
 #endif
 
@@ -40,22 +41,32 @@ namespace HMMDishonestCasino.Algorithms
 
         private void ValidateParameters()
         {
-            if(EmmisionMatrix==null|| TransitionMatrix==null|| SequenceOfObservations==null|| StateSpace==null|| ObservationSpace==null)
+            if(EmissionMatrix==null|| TransitionMatrix==null|| SequenceOfObservations==null|| StateSpace==null|| ObservationSpace==null)
                 throw new ArgumentException("Parameters cannot be null");
 
-            if(ObservationSpace.Length != EmmisionMatrix.GetLength(1)|| ObservationSpace.Length==0)
+            if(ObservationSpace.Length != EmissionMatrix.GetLength(1)|| ObservationSpace.Length==0)
                 throw new ArgumentException("N should be greater than 0 and consistent");
 
 #if _USE_ARRAYS_INSTEAD_OF_MATRIX_HASHTABLE
-                        if (StateSpace.Length != TransitionMatrix.GetLength(0) || TransitionMatrix.GetLength(0) != TransitionMatrix.GetLength(1) || TransitionMatrix.GetLength(1)!= EmmisionMatrix.GetLength(0)|| EmmisionMatrix.GetLength(0)!= ArrayOfInitialProbabilitiesOfStates.Length || StateSpace.Length==0)
+                        if (StateSpace.Length != TransitionMatrix.GetLength(0) || TransitionMatrix.GetLength(0) != TransitionMatrix.GetLength(1) || TransitionMatrix.GetLength(1)!= EmissionMatrix.GetLength(0)|| EmissionMatrix.GetLength(0)!= ArrayOfInitialProbabilitiesOfStates.Length || StateSpace.Length==0)
                 throw new ArgumentException("K should be greater than 0 and consistent");
 #else
 
-            if (StateSpace.Length != TransitionMatrix.GetLength(0) || TransitionMatrix.GetLength(0) != TransitionMatrix.GetLength(1) || TransitionMatrix.GetLength(1)!= EmmisionMatrix.GetLength(0)|| EmmisionMatrix.GetLength(0)!= ArrayOfInitialProbabilitiesOfStates.Count || StateSpace.Length==0)
+            if (StateSpace.Length != TransitionMatrix.GetLength(0) || TransitionMatrix.GetLength(0) != TransitionMatrix.GetLength(1) || TransitionMatrix.GetLength(1)!= EmissionMatrix.GetLength(0)|| EmissionMatrix.GetLength(0)!= ArrayOfInitialProbabilitiesOfStates.Count || StateSpace.Length==0)
                 throw new ArgumentException("K should be greater than 0 and consistent");
 #endif
             if(SequenceOfObservations.Length==0)
                 throw new ArgumentException("T should be greater than 0 and consistent");
+
+            if (StateSpace.Select(state => ObservationSpace.Sum(observation => EmissionMatrix[state, observation])).Any(sum => sum<=0.99m || sum >= 1.01m))
+            {
+                throw new ArgumentException("EmissionMatrix has not normalized probabilities");//Exception("Emi");
+            }
+
+            if (StateSpace.Select(state1 => StateSpace.Sum(state2 => TransitionMatrix[state1, state2])).Any(sum => sum <= 0.99m || sum >= 1.01m))
+            {
+                throw new ArgumentException("TransitionMatrix has not normalized probabilities");//Exception("Emi");
+            }
         }
     }
 }

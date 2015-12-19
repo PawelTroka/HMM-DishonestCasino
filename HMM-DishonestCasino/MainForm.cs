@@ -20,8 +20,6 @@ namespace HMMDishonestCasino
             probalbilitiesOfEachNumberDataGridView.DataSource = casino.UnfairProbabilities;
 
             //probalbilitiesOfEachNumberDataGridView.DataBindings.Add()
-
-
             NumbersColumn.DataPropertyName = "Number";
             ProbabilitiesColumn.DataPropertyName = "Probability";
 
@@ -38,24 +36,6 @@ namespace HMMDishonestCasino
             //probalbilitiesOfEachNumberDataGridView.RowsRemoved += ProbalbilitiesOfEachNumberDataGridView_RowsRemoved;
         }
 
-        private void ProbalbilitiesOfEachNumberDataGridView_RowsRemoved(object sender,
-            DataGridViewRowsRemovedEventArgs e)
-        {
-            // throw new NotImplementedException();
-        }
-
-        private void ProbalbilitiesOfEachNumberDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        private void ProbalbilitiesOfEachNumberDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (probalbilitiesOfEachNumberDataGridView[e.ColumnIndex, e.RowIndex] is DataGridViewNumericUpDownCell)
-            {
-            }
-        }
-
         private void EmitButton_Click(object sender, EventArgs e)
         {
             casino.ValidateState();
@@ -64,9 +44,6 @@ namespace HMMDishonestCasino
             {
                 casino.History.Clear();
                 outputSequenceListBox.Items.Clear();
-                //dataGridView1.Rows.Clear();
-                //dataGridView1.Columns.Clear();
-
             }
 
             if (emitNTimesCheckBox.Checked)
@@ -155,7 +132,7 @@ namespace HMMDishonestCasino
                     [StateSpace.LoadedDice, StateSpace.FairDice] = casino.SwitchToFairDiceProbability,
                     [StateSpace.LoadedDice, StateSpace.LoadedDice] = 1 - casino.SwitchToFairDiceProbability,
                 },
-                EmmisionMatrix = new MatrixHashTable<StateSpace, int, decimal>(stateSpace, observationSpace)
+                EmissionMatrix = new MatrixHashTable<StateSpace, int, decimal>(stateSpace, observationSpace)
             };
 
             viterbiAlgorithm = new ViterbiAlgorithm<int, StateSpace>()
@@ -175,17 +152,17 @@ namespace HMMDishonestCasino
                     [StateSpace.LoadedDice, StateSpace.FairDice] = casino.SwitchToFairDiceProbability,
                     [StateSpace.LoadedDice, StateSpace.LoadedDice] = 1 - casino.SwitchToFairDiceProbability,
                 },
-                EmmisionMatrix = new MatrixHashTable<StateSpace, int, decimal>(stateSpace, observationSpace)
+                EmissionMatrix = new MatrixHashTable<StateSpace, int, decimal>(stateSpace, observationSpace)
             };
 
 
             for (int i = 1; i <= casino.NumberOfSides; i++)
             {
-                viterbiAlgorithm.EmmisionMatrix[StateSpace.FairDice, i] = 1.0m/casino.NumberOfSides;
-                viterbiAlgorithm.EmmisionMatrix[StateSpace.LoadedDice, i] = (decimal)probalbilitiesOfEachNumberDataGridView[1, i-1].Value;
+                viterbiAlgorithm.EmissionMatrix[StateSpace.FairDice, i] = 1.0m/casino.NumberOfSides;
+                viterbiAlgorithm.EmissionMatrix[StateSpace.LoadedDice, i] = (decimal)probalbilitiesOfEachNumberDataGridView[1, i-1].Value;
 
-                aposterioriAlgorithm.EmmisionMatrix[StateSpace.FairDice, i] = 1.0m / casino.NumberOfSides;
-                aposterioriAlgorithm.EmmisionMatrix[StateSpace.LoadedDice, i] = (decimal)probalbilitiesOfEachNumberDataGridView[1, i - 1].Value;
+                aposterioriAlgorithm.EmissionMatrix[StateSpace.FairDice, i] = 1.0m / casino.NumberOfSides;
+                aposterioriAlgorithm.EmissionMatrix[StateSpace.LoadedDice, i] = (decimal)probalbilitiesOfEachNumberDataGridView[1, i - 1].Value;
             }
             
         }

@@ -1,11 +1,5 @@
 namespace HMMDishonestCasino
 {
-    public enum StateSpace
-    {
-        FairDice,
-        LoadedDice
-    }
-
     public class CasinoState
     {
         public CasinoState(StateSpace stateSpace, int result)
