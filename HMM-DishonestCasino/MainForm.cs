@@ -62,6 +62,7 @@ namespace HMMDishonestCasino
 
             if (clearOutputsCheckBox.Checked)
             {
+                casino.History.Clear();
                 outputSequenceListBox.Items.Clear();
                 //dataGridView1.Rows.Clear();
                 //dataGridView1.Columns.Clear();
