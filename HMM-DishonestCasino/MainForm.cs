@@ -7,15 +7,15 @@ using HMMDishonestCasino.Algorithms.Prediction;
 using HMMDishonestCasino.Algorithms.Probability;
 using HMMDishonestCasino.Casino;
 using HMMDishonestCasino.Collections;
-using HMMDishonestCasino.Controls.DataGridViewNumericUpDownElements;
 
 namespace HMMDishonestCasino
 {
     public partial class MainForm : Form
     {
-        private BaseAlgorithm<int, StateSpace> viterbiAlgorithm, aposterioriAlgorithm;
-        private ProbabilityCalculatingAlgorithm<int, StateSpace> prefixAlgorithm, suffixAlgorithm; 
         private readonly DishonestCasino casino;
+        private ProbabilityCalculatingAlgorithm<int, StateSpace> prefixAlgorithm, suffixAlgorithm;
+        private PredictionAlgorithm<int, StateSpace> viterbiAlgorithm, aposterioriAlgorithm;
+
         public MainForm()
         {
             casino = new DishonestCasino();
@@ -58,7 +58,6 @@ namespace HMMDishonestCasino
             {
                 outputSequenceListBox.Items.Add(casino.Emit());
             }
-
         }
 
         private void numberOfSidesNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -73,7 +72,7 @@ namespace HMMDishonestCasino
                 while (numberOfSidesNumericUpDown.Value != casino.UnfairProbabilities.Count)
                     casino.UnfairProbabilities.RemoveAt(casino.UnfairProbabilities.Count - 1);
             }
-            casino.NumberOfSides = (int)numberOfSidesNumericUpDown.Value;
+            casino.NumberOfSides = (int) numberOfSidesNumericUpDown.Value;
         }
 
         private void switchToFairDiceProbabilityNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -98,7 +97,7 @@ namespace HMMDishonestCasino
 
             suffixAlgorithm.DoWork();
 
-            for (int index  = 0; index < casino.History.Count; index++)
+            for (var index = 0; index < casino.History.Count; index++)
             {
                 dataGridView1.Rows.Add(casino.History[index].Result, viterbiAlgorithm.Output[index],
                     casino.History[index].StateSpace
@@ -107,28 +106,28 @@ namespace HMMDishonestCasino
 
             var sumOfViterbiMatches = 0.0;
             var sumOfAposterioriMatches = 0.0;
-            for (int i = 0; i < casino.History.Count; i++)
+            for (var i = 0; i < casino.History.Count; i++)
             {
-                sumOfViterbiMatches += (casino.History[i].StateSpace == viterbiAlgorithm.Output[i]) ? 1 : 0;
+                sumOfViterbiMatches += casino.History[i].StateSpace == viterbiAlgorithm.Output[i] ? 1 : 0;
                 //sumOfAposterioriMatches += (casino.History[i].StateSpace == aposterioriAlgorithm.Output[i]) ? 1 : 0;
             }
 
             MessageBox.Show(
-                $"Viterbi match = {100*sumOfViterbiMatches/casino.History.Count}%\nAPosteriori match = {100 * sumOfAposterioriMatches /casino.History.Count}%\nPrefix probability = {100 * prefixAlgorithm.P()}%\nSuffix probability = {100 * suffixAlgorithm.P()}%");
+                $"Viterbi match = {100*sumOfViterbiMatches/casino.History.Count}%\nAPosteriori match = {100*sumOfAposterioriMatches/casino.History.Count}%\nPrefix probability = {100*prefixAlgorithm.P()}%\nSuffix probability = {100*suffixAlgorithm.P()}%");
         }
 
         private void InitAlgorithms()
         {
-            var stateSpace = new StateSpace[] {StateSpace.FairDice, StateSpace.LoadedDice,};
+            var stateSpace = new[] {StateSpace.FairDice, StateSpace.LoadedDice};
             var observationSpace = Enumerable.Range(1, (int) numberOfSidesNumericUpDown.Value).ToArray();
 
-            
-            viterbiAlgorithm = new ViterbiAlgorithm<int, StateSpace>()
+
+            viterbiAlgorithm = new ViterbiAlgorithm<int, StateSpace>
             {
                 StateSpace = stateSpace,
                 ObservationSpace = Enumerable.Range(1, casino.NumberOfSides).ToArray(),
                 SequenceOfObservations = casino.History.Select(el => el.Result).ToArray(),
-                InitialProbabilitiesOfStates = new Dictionary<StateSpace, double>()
+                InitialProbabilitiesOfStates = new Dictionary<StateSpace, double>
                 {
                     {StateSpace.FairDice, casino.SwitchToFairDiceProbability},
                     {StateSpace.LoadedDice, casino.SwitchToUnfairDiceProbability}
@@ -138,20 +137,21 @@ namespace HMMDishonestCasino
                     [StateSpace.FairDice, StateSpace.FairDice] = 1 - casino.SwitchToUnfairDiceProbability,
                     [StateSpace.FairDice, StateSpace.LoadedDice] = casino.SwitchToUnfairDiceProbability,
                     [StateSpace.LoadedDice, StateSpace.FairDice] = casino.SwitchToFairDiceProbability,
-                    [StateSpace.LoadedDice, StateSpace.LoadedDice] = 1 - casino.SwitchToFairDiceProbability,
+                    [StateSpace.LoadedDice, StateSpace.LoadedDice] = 1 - casino.SwitchToFairDiceProbability
                 },
                 EmissionMatrix = new MatrixHashTable<StateSpace, int, double>(stateSpace, observationSpace)
             };
 
 
-            for (int i = 1; i <= casino.NumberOfSides; i++)
+            for (var i = 1; i <= casino.NumberOfSides; i++)
             {
                 viterbiAlgorithm.EmissionMatrix[StateSpace.FairDice, i] = 1.0/casino.NumberOfSides;
-                viterbiAlgorithm.EmissionMatrix[StateSpace.LoadedDice, i] = (double)probalbilitiesOfEachNumberDataGridView[1, i-1].Value;
+                viterbiAlgorithm.EmissionMatrix[StateSpace.LoadedDice, i] =
+                    (double) probalbilitiesOfEachNumberDataGridView[1, i - 1].Value;
             }
 
             aposterioriAlgorithm = new APosterioriAlgorithm<int, StateSpace>(viterbiAlgorithm);
-            prefixAlgorithm = new PrefixAlgorithm<int,StateSpace>(viterbiAlgorithm);
+            prefixAlgorithm = new PrefixAlgorithm<int, StateSpace>(viterbiAlgorithm);
             suffixAlgorithm = new SuffixAlgorithm<int, StateSpace>(viterbiAlgorithm);
         }
     }

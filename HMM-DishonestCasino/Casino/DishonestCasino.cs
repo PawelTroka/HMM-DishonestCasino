@@ -10,12 +10,12 @@ namespace HMMDishonestCasino.Casino
         private const int DEFAULT_NUMBER_OF_SIDES = 6;
 
         private readonly LoadedDice _loadedDice;
-
-        private Dice currentDice;
         private readonly Dice fairDice;
 
         private readonly Random random;
-        private double TOLERANCE = 0.01;
+
+        private Dice currentDice;
+        private readonly double TOLERANCE = 0.01;
 
         public DishonestCasino()
         {
@@ -46,13 +46,13 @@ namespace HMMDishonestCasino.Casino
         {
             TrySwitchDice();
             var result = currentDice.Roll();
-            History.Add(new CasinoState((currentDice is LoadedDice) ? StateSpace.LoadedDice : StateSpace.FairDice, result));
+            History.Add(new CasinoState(currentDice is LoadedDice ? StateSpace.LoadedDice : StateSpace.FairDice, result));
             return result;
         }
 
         private void TrySwitchDice()
         {
-            var randomValue = (double) random.NextDouble();
+            var randomValue = random.NextDouble();
             if (currentDice is LoadedDice && randomValue <= SwitchToFairDiceProbability)
                 currentDice = fairDice;
             else if (randomValue <= SwitchToUnfairDiceProbability)

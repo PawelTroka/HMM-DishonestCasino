@@ -122,9 +122,7 @@ namespace HMMDishonestCasino.Controls.DataGridViewNumericUpDownElements
         /// </summary>
         public override Type EditType
         {
-            get
-            {
-                return defaultEditType; // the type is DataGridViewNumericUpDownEditingControl
+            get { return defaultEditType; // the type is DataGridViewNumericUpDownEditingControl
             }
         }
 

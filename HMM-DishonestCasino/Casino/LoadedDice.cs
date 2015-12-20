@@ -43,7 +43,7 @@ namespace HMMDishonestCasino.Casino
 
         public override int Roll()
         {
-            var randomValue = (double) random.NextDouble();
+            var randomValue = random.NextDouble();
 
             var distribution = GetDistribution();
 

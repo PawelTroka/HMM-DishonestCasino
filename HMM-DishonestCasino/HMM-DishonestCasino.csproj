@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\Prediction\PredictionAlgorithm.cs" />
     <Compile Include="Algorithms\Prediction\APosterioriAlgorithm.cs" />
     <Compile Include="Algorithms\BaseAlgorithm.cs" />
     <Compile Include="Algorithms\Probability\PrefixAlgorithm.cs" />

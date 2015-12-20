@@ -1,7 +1,6 @@
 ﻿#define _USE_DICTIONARY_WITHIN_DICTIONARY
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace HMMDishonestCasino.Collections
 {
@@ -11,10 +10,9 @@ namespace HMMDishonestCasino.Collections
         {
             if (i == 0)
                 return _k1SpaceCount;
-            else if (i == 1)
+            if (i == 1)
                 return _k2SpaceCount;
-            else
-                throw new ArgumentException();
+            throw new ArgumentException();
         }
 
         private readonly int _k1SpaceCount;
@@ -81,6 +79,5 @@ namespace HMMDishonestCasino.Collections
             }
         }
 #endif
-
     }
 }

@@ -5,16 +5,14 @@ using System.Linq;
 
 namespace HMMDishonestCasino.Algorithms.Prediction
 {
-
-    public class ViterbiAlgorithm<TObservation, TState> : BaseAlgorithm<TObservation, TState>
+    public class ViterbiAlgorithm<TObservation, TState> : PredictionAlgorithm<TObservation, TState>
     {
         public ViterbiAlgorithm()
         {
-
         }
+
         public ViterbiAlgorithm(BaseAlgorithm<TObservation, TState> baseAlgorithm) : base(baseAlgorithm)
         {
-
         }
 
 #if !_OLD_VERSION
@@ -28,11 +26,11 @@ namespace HMMDishonestCasino.Algorithms.Prediction
             {
                 T1[state] = new double[T];
                 T2[state] = new TState[T];
-                T1[state][0] = InitialProbabilitiesOfStates[state] * EmissionMatrix[state, SequenceOfObservations[0]];
+                T1[state][0] = InitialProbabilitiesOfStates[state]*EmissionMatrix[state, SequenceOfObservations[0]];
                 T2[state][0] = state;
             }
 
-            for (int i = 1; i < SequenceOfObservations.Length; i++)
+            for (var i = 1; i < SequenceOfObservations.Length; i++)
             {
                 foreach (var state in StateSpace)
                 {
@@ -44,28 +42,27 @@ namespace HMMDishonestCasino.Algorithms.Prediction
             Output = new TState[T];
 
             //z_T \gets \arg\max_{k}{(T_1[k,T])} 
-            Output[T - 1] = T1.Select((value, index) => new { Value = value, Index = index })
-                                .Aggregate((a, b) => (a.Value.Value[T - 1] > b.Value.Value[T - 1]) ? a : b)
-                                .Value.Key;
+            Output[T - 1] = T1.Select((value, index) => new {Value = value, Index = index})
+                .Aggregate((a, b) => a.Value.Value[T - 1] > b.Value.Value[T - 1] ? a : b)
+                .Value.Key;
 
-            for (int i = T - 1; i > 0; i--)
+            for (var i = T - 1; i > 0; i--)
                 Output[i - 1] = T2[Output[i]][i];
-            
         }
 
         private dynamic max(Dictionary<TState, double[]> T1, int i, TState state)
         {
             var max = double.MinValue;
             var argmax = default(TState);
-            foreach (TState t in StateSpace)
+            foreach (var t in StateSpace)
             {
-                var value = T1[t][i - 1] * TransitionMatrix[t, state];
+                var value = T1[t][i - 1]*TransitionMatrix[t, state];
                 if (value <= max) continue;
                 max = value;
                 argmax = t;
             }
 
-            return new { max, argmax };
+            return new {max, argmax};
         }
 #else
     private struct ArgMax
@@ -116,6 +113,5 @@ namespace HMMDishonestCasino.Algorithms.Prediction
             return new { max, argmax };
         }
 #endif
-
     }
 }
