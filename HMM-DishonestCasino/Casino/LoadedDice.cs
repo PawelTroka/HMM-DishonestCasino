@@ -7,7 +7,7 @@ namespace HMMDishonestCasino.Casino
 {
     public class LoadedDice : Dice
     {
-        private const decimal MAX_UNFAIR_PROBABILITY = 0.5m;
+        private const double MAX_UNFAIR_PROBABILITY = 0.5;
 
         public LoadedDice(int numberOfSides, Random random) : base(numberOfSides, random)
         {
@@ -43,7 +43,7 @@ namespace HMMDishonestCasino.Casino
 
         public override int Roll()
         {
-            var randomValue = (decimal) random.NextDouble();
+            var randomValue = (double) random.NextDouble();
 
             var distribution = GetDistribution();
 

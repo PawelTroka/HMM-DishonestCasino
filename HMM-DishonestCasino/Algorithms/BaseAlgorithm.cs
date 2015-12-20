@@ -24,7 +24,7 @@ namespace HMMDishonestCasino.Algorithms
 
             TransitionMatrix = baseAlgorithm.TransitionMatrix;
             EmissionMatrix = baseAlgorithm.EmissionMatrix;
-            ArrayOfInitialProbabilitiesOfStates = baseAlgorithm.ArrayOfInitialProbabilitiesOfStates;
+            InitialProbabilitiesOfStates = baseAlgorithm.InitialProbabilitiesOfStates;
         }
 
         public int N => ObservationSpace.Length; // count of all possible results
@@ -40,13 +40,13 @@ namespace HMMDishonestCasino.Algorithms
         public TObservation[] SequenceOfObservations { get; set; } //actual results // size T
 
 #if _USE_ARRAYS_INSTEAD_OF_MATRIX_HASHTABLE
-        public decimal[,] TransitionMatrix { get; set; } // size K*K
-        public decimal[,] EmissionMatrix { get; set; } // size K*N
-        public decimal[] ArrayOfInitialProbabilitiesOfStates { get; set; } // size K
+        public double[,] TransitionMatrix { get; set; } // size K*K
+        public double[,] EmissionMatrix { get; set; } // size K*N
+        public double[] InitialProbabilitiesOfStates { get; set; } // size K
 #else
-        public MatrixHashTable<TState, TState,decimal> TransitionMatrix { get; set; } // size K*K
-        public MatrixHashTable<TState, TObservation, decimal> EmissionMatrix { get; set; } // size K*N
-        public Dictionary<TState,decimal> ArrayOfInitialProbabilitiesOfStates { get; set; } // size K
+        public MatrixHashTable<TState, TState,double> TransitionMatrix { get; set; } // size K*K
+        public MatrixHashTable<TState, TObservation, double> EmissionMatrix { get; set; } // size K*N
+        public Dictionary<TState,double> InitialProbabilitiesOfStates { get; set; } // size K
 #endif
 
         // public List<int> Input { get; set; }
@@ -66,22 +66,22 @@ namespace HMMDishonestCasino.Algorithms
                 throw new ArgumentException("N should be greater than 0 and consistent");
 
 #if _USE_ARRAYS_INSTEAD_OF_MATRIX_HASHTABLE
-                        if (StateSpace.Length != TransitionMatrix.GetLength(0) || TransitionMatrix.GetLength(0) != TransitionMatrix.GetLength(1) || TransitionMatrix.GetLength(1)!= EmissionMatrix.GetLength(0)|| EmissionMatrix.GetLength(0)!= ArrayOfInitialProbabilitiesOfStates.Length || StateSpace.Length==0)
+                        if (StateSpace.Length != TransitionMatrix.GetLength(0) || TransitionMatrix.GetLength(0) != TransitionMatrix.GetLength(1) || TransitionMatrix.GetLength(1)!= EmissionMatrix.GetLength(0)|| EmissionMatrix.GetLength(0)!= InitialProbabilitiesOfStates.Length || StateSpace.Length==0)
                 throw new ArgumentException("K should be greater than 0 and consistent");
 #else
 
-            if (StateSpace.Length != TransitionMatrix.GetLength(0) || TransitionMatrix.GetLength(0) != TransitionMatrix.GetLength(1) || TransitionMatrix.GetLength(1)!= EmissionMatrix.GetLength(0)|| EmissionMatrix.GetLength(0)!= ArrayOfInitialProbabilitiesOfStates.Count || StateSpace.Length==0)
+            if (StateSpace.Length != TransitionMatrix.GetLength(0) || TransitionMatrix.GetLength(0) != TransitionMatrix.GetLength(1) || TransitionMatrix.GetLength(1)!= EmissionMatrix.GetLength(0)|| EmissionMatrix.GetLength(0)!= InitialProbabilitiesOfStates.Count || StateSpace.Length==0)
                 throw new ArgumentException("K should be greater than 0 and consistent");
 #endif
             if(SequenceOfObservations.Length==0)
                 throw new ArgumentException("T should be greater than 0 and consistent");
 
-            if (StateSpace.Select(state => ObservationSpace.Sum(observation => EmissionMatrix[state, observation])).Any(sum => sum<=0.99m || sum >= 1.01m))
+            if (StateSpace.Select(state => ObservationSpace.Sum(observation => EmissionMatrix[state, observation])).Any(sum => sum<=0.99 || sum >= 1.01))
             {
                 throw new ArgumentException("EmissionMatrix has not normalized probabilities");//Exception("Emi");
             }
 
-            if (StateSpace.Select(state1 => StateSpace.Sum(state2 => TransitionMatrix[state1, state2])).Any(sum => sum <= 0.99m || sum >= 1.01m))
+            if (StateSpace.Select(state1 => StateSpace.Sum(state2 => TransitionMatrix[state1, state2])).Any(sum => sum <= 0.99 || sum >= 1.01))
             {
                 throw new ArgumentException("TransitionMatrix has not normalized probabilities");//Exception("Emi");
             }

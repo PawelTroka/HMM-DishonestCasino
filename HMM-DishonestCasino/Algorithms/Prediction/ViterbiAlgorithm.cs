@@ -21,14 +21,14 @@ namespace HMMDishonestCasino.Algorithms.Prediction
         public override void DoWork() //based on https://en.wikipedia.org/wiki/Viterbi_algorithm#Pseudocode
         {
             base.DoWork();
-            var T1 = new Dictionary<TState, decimal[]>();
+            var T1 = new Dictionary<TState, double[]>();
             var T2 = new Dictionary<TState, TState[]>();
 
             foreach (var state in StateSpace)
             {
-                T1[state] = new decimal[T];
+                T1[state] = new double[T];
                 T2[state] = new TState[T];
-                T1[state][0] = ArrayOfInitialProbabilitiesOfStates[state] * EmissionMatrix[state, SequenceOfObservations[0]];
+                T1[state][0] = InitialProbabilitiesOfStates[state] * EmissionMatrix[state, SequenceOfObservations[0]];
                 T2[state][0] = state;
             }
 
@@ -53,9 +53,9 @@ namespace HMMDishonestCasino.Algorithms.Prediction
             
         }
 
-        private dynamic max(Dictionary<TState, decimal[]> T1, int i, TState state)
+        private dynamic max(Dictionary<TState, double[]> T1, int i, TState state)
         {
-            var max = decimal.MinValue;
+            var max = double.MinValue;
             var argmax = default(TState);
             foreach (TState t in StateSpace)
             {
@@ -70,19 +70,19 @@ namespace HMMDishonestCasino.Algorithms.Prediction
 #else
     private struct ArgMax
     {
-        public decimal Arg;
-        public decimal Max;
+        public double Arg;
+        public double Max;
     }
         public override void DoWork() //based on https://en.wikipedia.org/wiki/Viterbi_algorithm#Pseudocode
         {
             base.DoWork();
-            decimal[,] T1 = new decimal[StateSpace.Length, T];
-            decimal[,] T2 = new decimal[StateSpace.Length, T];
+            double[,] T1 = new double[StateSpace.Length, T];
+            double[,] T2 = new double[StateSpace.Length, T];
 
             for (int i = 0; i < StateSpace.Length; i++)
             {
                 var state = StateSpace[i];
-                T1[i, 0] = ArrayOfInitialProbabilitiesOfStates[i] * EmissionMatrix[i, 0];
+                T1[i, 0] = InitialProbabilitiesOfStates[i] * EmissionMatrix[i, 0];
                 T2[i, 0] = 0;
             }
 
@@ -98,10 +98,10 @@ namespace HMMDishonestCasino.Algorithms.Prediction
             }
         }
 
-        private dynamic ArgMax(decimal[,] T1, int i, int j)
+        private dynamic ArgMax(double[,] T1, int i, int j)
         {
-            var max = decimal.MinValue;
-            var argmax = decimal.MinusOne;
+            var max = double.MinValue;
+            var argmax = double.MinusOne;
             for (int k = 0; k < T1.Length; k++)
             {
                 var value = T1[k, i - 1] * TransitionMatrix[k, j] * EmissionMatrix[j, i];
@@ -110,7 +110,7 @@ namespace HMMDishonestCasino.Algorithms.Prediction
                 argmax = k;
             }
 
-            if (argmax == decimal.MinusOne)
+            if (argmax == double.MinusOne)
                 throw new Exception();
 
             return new { max, argmax };

@@ -2,7 +2,7 @@ namespace HMMDishonestCasino.Casino
 {
     public class Probabilities
     {
-        public Probabilities(int number, decimal probability)
+        public Probabilities(int number, double probability)
         {
             Number = number;
             Probability = probability;
@@ -17,6 +17,6 @@ namespace HMMDishonestCasino.Casino
 
         public int Number { get; set; }
 
-        public decimal Probability { get; set; }
+        public double Probability { get; set; }
     }
 }

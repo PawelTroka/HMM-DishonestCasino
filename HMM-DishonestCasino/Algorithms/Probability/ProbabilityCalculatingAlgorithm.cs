@@ -6,7 +6,7 @@ namespace HMMDishonestCasino.Algorithms
 {
     abstract class ProbabilityCalculatingAlgorithm<TObservation, TState> : BaseAlgorithm<TObservation, TState>
     {
-        protected Dictionary<TState, decimal[]> f = new Dictionary<TState, decimal[]>();
+        protected Dictionary<TState, double[]> f;
 
         public ProbabilityCalculatingAlgorithm()
         {
@@ -17,14 +17,16 @@ namespace HMMDishonestCasino.Algorithms
 
         }
 
-        public decimal P(int? i = null)
+        public override void DoWork()
         {
-            if (f == null||f.Count==0)
-                throw new Exception("You have to call DoWork() first");
-            if (i == null)
-                return P(T - 1);
-
-            return StateSpace.Sum(state => f[state][i.Value]);
+            base.DoWork();
+            f = new Dictionary<TState, double[]>();
+            foreach (var state in StateSpace)
+            {
+                f[state] = new double[T];
+            }
         }
+
+        public abstract double P();
     }
 }

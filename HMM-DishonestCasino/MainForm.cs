@@ -66,7 +66,7 @@ namespace HMMDishonestCasino
             if (numberOfSidesNumericUpDown.Value > casino.UnfairProbabilities.Count)
             {
                 while (numberOfSidesNumericUpDown.Value != casino.UnfairProbabilities.Count)
-                    casino.UnfairProbabilities.Add(new Probabilities(casino.UnfairProbabilities.Count + 1, 0m));
+                    casino.UnfairProbabilities.Add(new Probabilities(casino.UnfairProbabilities.Count + 1, 0));
             }
             else if (numberOfSidesNumericUpDown.Value < casino.UnfairProbabilities.Count)
             {
@@ -78,12 +78,12 @@ namespace HMMDishonestCasino
 
         private void switchToFairDiceProbabilityNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            casino.SwitchToFairDiceProbability = switchToFairDiceProbabilityNumericUpDown.Value;
+            casino.SwitchToFairDiceProbability = (double) switchToFairDiceProbabilityNumericUpDown.Value;
         }
 
         private void switchToUnfairDiceProbabilityNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            casino.SwitchToUnfairDiceProbability = switchToUnfairDiceProbabilityNumericUpDown.Value;
+            casino.SwitchToUnfairDiceProbability = (double) switchToUnfairDiceProbabilityNumericUpDown.Value;
         }
 
         private void makeComparisonButton_Click(object sender, EventArgs e)
@@ -114,7 +114,7 @@ namespace HMMDishonestCasino
             }
 
             MessageBox.Show(
-                $"Viterbi match = {100*sumOfViterbiMatches/casino.History.Count}%\nAPosteriori match = {100 * sumOfAposterioriMatches /casino.History.Count}%\nPrefix probability = {100 * prefixAlgorithm.P()}%");
+                $"Viterbi match = {100*sumOfViterbiMatches/casino.History.Count}%\nAPosteriori match = {100 * sumOfAposterioriMatches /casino.History.Count}%\nPrefix probability = {100 * prefixAlgorithm.P()}%\nSuffix probability = {100 * suffixAlgorithm.P()}%");
         }
 
         private void InitAlgorithms()
@@ -128,26 +128,26 @@ namespace HMMDishonestCasino
                 StateSpace = stateSpace,
                 ObservationSpace = Enumerable.Range(1, casino.NumberOfSides).ToArray(),
                 SequenceOfObservations = casino.History.Select(el => el.Result).ToArray(),
-                ArrayOfInitialProbabilitiesOfStates = new Dictionary<StateSpace, decimal>()
+                InitialProbabilitiesOfStates = new Dictionary<StateSpace, double>()
                 {
                     {StateSpace.FairDice, casino.SwitchToFairDiceProbability},
                     {StateSpace.LoadedDice, casino.SwitchToUnfairDiceProbability}
                 },
-                TransitionMatrix = new MatrixHashTable<StateSpace, StateSpace, decimal>(stateSpace, stateSpace)
+                TransitionMatrix = new MatrixHashTable<StateSpace, StateSpace, double>(stateSpace, stateSpace)
                 {
                     [StateSpace.FairDice, StateSpace.FairDice] = 1 - casino.SwitchToUnfairDiceProbability,
                     [StateSpace.FairDice, StateSpace.LoadedDice] = casino.SwitchToUnfairDiceProbability,
                     [StateSpace.LoadedDice, StateSpace.FairDice] = casino.SwitchToFairDiceProbability,
                     [StateSpace.LoadedDice, StateSpace.LoadedDice] = 1 - casino.SwitchToFairDiceProbability,
                 },
-                EmissionMatrix = new MatrixHashTable<StateSpace, int, decimal>(stateSpace, observationSpace)
+                EmissionMatrix = new MatrixHashTable<StateSpace, int, double>(stateSpace, observationSpace)
             };
 
 
             for (int i = 1; i <= casino.NumberOfSides; i++)
             {
-                viterbiAlgorithm.EmissionMatrix[StateSpace.FairDice, i] = 1.0m/casino.NumberOfSides;
-                viterbiAlgorithm.EmissionMatrix[StateSpace.LoadedDice, i] = (decimal)probalbilitiesOfEachNumberDataGridView[1, i-1].Value;
+                viterbiAlgorithm.EmissionMatrix[StateSpace.FairDice, i] = 1.0/casino.NumberOfSides;
+                viterbiAlgorithm.EmissionMatrix[StateSpace.LoadedDice, i] = (double)probalbilitiesOfEachNumberDataGridView[1, i-1].Value;
             }
 
             aposterioriAlgorithm = new APosterioriAlgorithm<int, StateSpace>(viterbiAlgorithm);

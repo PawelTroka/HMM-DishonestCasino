@@ -15,6 +15,7 @@ namespace HMMDishonestCasino.Casino
         private readonly Dice fairDice;
 
         private readonly Random random;
+        private double TOLERANCE = 0.01;
 
         public DishonestCasino()
         {
@@ -38,8 +39,8 @@ namespace HMMDishonestCasino.Casino
             set { _loadedDice.Probabilities = value; }
         }
 
-        public decimal SwitchToFairDiceProbability { get; set; } = 0.1m;
-        public decimal SwitchToUnfairDiceProbability { get; set; } = 0.05m;
+        public double SwitchToFairDiceProbability { get; set; } = 0.1;
+        public double SwitchToUnfairDiceProbability { get; set; } = 0.05;
 
         public int Emit()
         {
@@ -51,7 +52,7 @@ namespace HMMDishonestCasino.Casino
 
         private void TrySwitchDice()
         {
-            var randomValue = (decimal) random.NextDouble();
+            var randomValue = (double) random.NextDouble();
             if (currentDice is LoadedDice && randomValue <= SwitchToFairDiceProbability)
                 currentDice = fairDice;
             else if (randomValue <= SwitchToUnfairDiceProbability)
@@ -73,11 +74,11 @@ namespace HMMDishonestCasino.Casino
             if (currentDice.NumberOfSides != fairDice.NumberOfSides ||
                 currentDice.NumberOfSides != _loadedDice.NumberOfSides)
                 throw new Exception();
-            if (UnfairProbabilities.Sum(el => el.Probability) != 1.0m)
+            if (Math.Abs(UnfairProbabilities.Sum(el => el.Probability) - 1.0) > TOLERANCE)
                 throw new Exception();
 
-            if (SwitchToFairDiceProbability > 1.0m || SwitchToFairDiceProbability < 0.0m ||
-                SwitchToUnfairDiceProbability < 0.0m || SwitchToUnfairDiceProbability > 1.0m)
+            if (SwitchToFairDiceProbability > 1.0 || SwitchToFairDiceProbability < 0.0 ||
+                SwitchToUnfairDiceProbability < 0.0 || SwitchToUnfairDiceProbability > 1.0)
                 throw new Exception();
         }
     }
