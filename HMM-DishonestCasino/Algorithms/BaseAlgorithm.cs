@@ -9,6 +9,24 @@ namespace HMMDishonestCasino.Algorithms
 {
     public abstract class BaseAlgorithm<TObservation, TState>
     {
+        protected BaseAlgorithm()
+        {
+            
+        }
+
+        protected BaseAlgorithm(BaseAlgorithm<TObservation, TState> baseAlgorithm)
+        {
+            ObservationSpace = baseAlgorithm.ObservationSpace;
+            StateSpace = baseAlgorithm.StateSpace;
+            SequenceOfObservations = baseAlgorithm.SequenceOfObservations;
+            ObservationSpace = baseAlgorithm.ObservationSpace;
+            TransitionMatrix = baseAlgorithm.TransitionMatrix;
+
+            TransitionMatrix = baseAlgorithm.TransitionMatrix;
+            EmissionMatrix = baseAlgorithm.EmissionMatrix;
+            ArrayOfInitialProbabilitiesOfStates = baseAlgorithm.ArrayOfInitialProbabilitiesOfStates;
+        }
+
         public int N => ObservationSpace.Length; // count of all possible results
 
         public int K => StateSpace.Length; // count of all possible states

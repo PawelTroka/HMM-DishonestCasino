@@ -46,9 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\APosterioriAlgorithm.cs" />
+    <Compile Include="Algorithms\Prediction\APosterioriAlgorithm.cs" />
     <Compile Include="Algorithms\BaseAlgorithm.cs" />
-    <Compile Include="Algorithms\ViterbiAlgorithm.cs" />
+    <Compile Include="Algorithms\Probability\PrefixAlgorithm.cs" />
+    <Compile Include="Algorithms\Probability\ProbabilityCalculatingAlgorithm.cs" />
+    <Compile Include="Algorithms\Probability\SuffixAlgorithm.cs" />
+    <Compile Include="Algorithms\Prediction\ViterbiAlgorithm.cs" />
     <Compile Include="Casino\Dice.cs" />
     <Compile Include="Casino\Probabilities.cs" />
     <Compile Include="Casino\LoadedDice.cs" />
@@ -95,6 +98,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

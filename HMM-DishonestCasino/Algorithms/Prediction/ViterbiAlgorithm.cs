@@ -1,17 +1,22 @@
 ﻿//#define _OLD_VERSION
 
-using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using HMMDishonestCasino.Collections;
 
-namespace HMMDishonestCasino.Algorithms
+namespace HMMDishonestCasino.Algorithms.Prediction
 {
 
     public class ViterbiAlgorithm<TObservation, TState> : BaseAlgorithm<TObservation, TState>
     {
+        public ViterbiAlgorithm()
+        {
+
+        }
+        public ViterbiAlgorithm(BaseAlgorithm<TObservation, TState> baseAlgorithm) : base(baseAlgorithm)
+        {
+
+        }
+
 #if !_OLD_VERSION
         public override void DoWork() //based on https://en.wikipedia.org/wiki/Viterbi_algorithm#Pseudocode
         {
@@ -24,7 +29,7 @@ namespace HMMDishonestCasino.Algorithms
                 T1[state] = new decimal[T];
                 T2[state] = new TState[T];
                 T1[state][0] = ArrayOfInitialProbabilitiesOfStates[state] * EmissionMatrix[state, SequenceOfObservations[0]];
-                T2[state][0] = default(TState);
+                T2[state][0] = state;
             }
 
             for (int i = 1; i < SequenceOfObservations.Length; i++)
@@ -32,7 +37,7 @@ namespace HMMDishonestCasino.Algorithms
                 foreach (var state in StateSpace)
                 {
                     var value = max(T1, i, state);
-                    T1[state][i] = value.max;
+                    T1[state][i] = EmissionMatrix[state, SequenceOfObservations[i]]*value.max;
                     T2[state][i] = value.argmax;
                 }
             }
@@ -54,7 +59,7 @@ namespace HMMDishonestCasino.Algorithms
             var argmax = default(TState);
             foreach (TState t in StateSpace)
             {
-                var value = T1[t][i - 1] * TransitionMatrix[t, state] * EmissionMatrix[state, SequenceOfObservations[i]];
+                var value = T1[t][i - 1] * TransitionMatrix[t, state];
                 if (value <= max) continue;
                 max = value;
                 argmax = t;

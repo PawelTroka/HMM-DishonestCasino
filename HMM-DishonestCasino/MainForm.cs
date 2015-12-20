@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using HMMDishonestCasino.Algorithms;
+using HMMDishonestCasino.Algorithms.Prediction;
+using HMMDishonestCasino.Algorithms.Probability;
 using HMMDishonestCasino.Casino;
 using HMMDishonestCasino.Collections;
 using HMMDishonestCasino.Controls.DataGridViewNumericUpDownElements;
@@ -11,7 +13,8 @@ namespace HMMDishonestCasino
 {
     public partial class MainForm : Form
     {
-        public BaseAlgorithm<int, StateSpace> viterbiAlgorithm, aposterioriAlgorithm;
+        private BaseAlgorithm<int, StateSpace> viterbiAlgorithm, aposterioriAlgorithm;
+        private ProbabilityCalculatingAlgorithm<int, StateSpace> prefixAlgorithm, suffixAlgorithm; 
         private readonly DishonestCasino casino;
         public MainForm()
         {
@@ -91,6 +94,10 @@ namespace HMMDishonestCasino
             viterbiAlgorithm.DoWork();
             aposterioriAlgorithm.DoWork();
 
+            prefixAlgorithm.DoWork();
+
+            suffixAlgorithm.DoWork();
+
             for (int index  = 0; index < casino.History.Count; index++)
             {
                 dataGridView1.Rows.Add(casino.History[index].Result, viterbiAlgorithm.Output[index],
@@ -107,7 +114,7 @@ namespace HMMDishonestCasino
             }
 
             MessageBox.Show(
-                $"Viterbi match = {100*sumOfViterbiMatches/casino.History.Count}%\nAPosteriori match = {100 * sumOfAposterioriMatches /casino.History.Count}%");
+                $"Viterbi match = {100*sumOfViterbiMatches/casino.History.Count}%\nAPosteriori match = {100 * sumOfAposterioriMatches /casino.History.Count}%\nPrefix probability = {100 * prefixAlgorithm.P()}%");
         }
 
         private void InitAlgorithms()
@@ -115,26 +122,7 @@ namespace HMMDishonestCasino
             var stateSpace = new StateSpace[] {StateSpace.FairDice, StateSpace.LoadedDice,};
             var observationSpace = Enumerable.Range(1, (int) numberOfSidesNumericUpDown.Value).ToArray();
 
-            aposterioriAlgorithm = new APosterioriAlgorithm<int, StateSpace>()
-            {
-                StateSpace = stateSpace,
-                ObservationSpace = Enumerable.Range(1, casino.NumberOfSides).ToArray(),
-                SequenceOfObservations = casino.History.Select(el => el.Result).ToArray(),
-                ArrayOfInitialProbabilitiesOfStates = new Dictionary<StateSpace, decimal>()
-                {
-                    {StateSpace.FairDice, casino.SwitchToFairDiceProbability},
-                    {StateSpace.LoadedDice, casino.SwitchToUnfairDiceProbability}
-                },
-                TransitionMatrix = new MatrixHashTable<StateSpace, StateSpace, decimal>(stateSpace, stateSpace)
-                {
-                    [StateSpace.FairDice, StateSpace.FairDice] = 1 - casino.SwitchToUnfairDiceProbability,
-                    [StateSpace.FairDice, StateSpace.LoadedDice] = casino.SwitchToUnfairDiceProbability,
-                    [StateSpace.LoadedDice, StateSpace.FairDice] = casino.SwitchToFairDiceProbability,
-                    [StateSpace.LoadedDice, StateSpace.LoadedDice] = 1 - casino.SwitchToFairDiceProbability,
-                },
-                EmissionMatrix = new MatrixHashTable<StateSpace, int, decimal>(stateSpace, observationSpace)
-            };
-
+            
             viterbiAlgorithm = new ViterbiAlgorithm<int, StateSpace>()
             {
                 StateSpace = stateSpace,
@@ -160,11 +148,11 @@ namespace HMMDishonestCasino
             {
                 viterbiAlgorithm.EmissionMatrix[StateSpace.FairDice, i] = 1.0m/casino.NumberOfSides;
                 viterbiAlgorithm.EmissionMatrix[StateSpace.LoadedDice, i] = (decimal)probalbilitiesOfEachNumberDataGridView[1, i-1].Value;
-
-                aposterioriAlgorithm.EmissionMatrix[StateSpace.FairDice, i] = 1.0m / casino.NumberOfSides;
-                aposterioriAlgorithm.EmissionMatrix[StateSpace.LoadedDice, i] = (decimal)probalbilitiesOfEachNumberDataGridView[1, i - 1].Value;
             }
-            
+
+            aposterioriAlgorithm = new APosterioriAlgorithm<int, StateSpace>(viterbiAlgorithm);
+            prefixAlgorithm = new PrefixAlgorithm<int,StateSpace>(viterbiAlgorithm);
+            suffixAlgorithm = new SuffixAlgorithm<int, StateSpace>(viterbiAlgorithm);
         }
     }
 }

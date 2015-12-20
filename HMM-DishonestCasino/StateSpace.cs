@@ -2,7 +2,7 @@ namespace HMMDishonestCasino
 {
     public enum StateSpace
     {
-        Undefined,
+        //Undefined,
         FairDice,
         LoadedDice
     }

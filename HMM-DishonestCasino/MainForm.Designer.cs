@@ -55,14 +55,14 @@ namespace HMMDishonestCasino
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewNumericUpDownColumn1 = new HMMDishonestCasino.Controls.DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewNumericUpDownColumn1 = new HMMDishonestCasino.Controls.DataGridViewNumericUpDownElements.DataGridViewNumericUpDownColumn();
             ((System.ComponentModel.ISupportInitialize)(this.probalbilitiesOfEachNumberDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nTimesNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfSidesNumericUpDown)).BeginInit();
@@ -434,6 +434,48 @@ namespace HMMDishonestCasino
             this.dataGridView1.Size = new System.Drawing.Size(950, 182);
             this.dataGridView1.TabIndex = 0;
             // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column1.FillWeight = 200F;
+            this.Column1.HeaderText = "Emit result";
+            this.Column1.MinimumWidth = 200;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.FillWeight = 200F;
+            this.Column2.HeaderText = "Viterbi prediction";
+            this.Column2.MinimumWidth = 200;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column3
+            // 
+            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column3.FillWeight = 200F;
+            this.Column3.HeaderText = "Real state";
+            this.Column3.MinimumWidth = 200;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column4
+            // 
+            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column4.FillWeight = 200F;
+            this.Column4.HeaderText = "A posteriori prediction";
+            this.Column4.MinimumWidth = 200;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.panel3);
@@ -477,48 +519,6 @@ namespace HMMDishonestCasino
             0,
             0});
             this.dataGridViewNumericUpDownColumn1.Name = "dataGridViewNumericUpDownColumn1";
-            // 
-            // Column1
-            // 
-            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column1.FillWeight = 200F;
-            this.Column1.HeaderText = "Emit result";
-            this.Column1.MinimumWidth = 200;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.FillWeight = 200F;
-            this.Column2.HeaderText = "Viterbi prediction";
-            this.Column2.MinimumWidth = 200;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Column3
-            // 
-            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column3.FillWeight = 200F;
-            this.Column3.HeaderText = "Real state";
-            this.Column3.MinimumWidth = 200;
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Column4
-            // 
-            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column4.FillWeight = 200F;
-            this.Column4.HeaderText = "A posteriori prediction";
-            this.Column4.MinimumWidth = 200;
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // MainForm
             // 
