@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using HMMDishonestCasino.Algorithms;
 using HMMDishonestCasino.Algorithms.Prediction;
 using HMMDishonestCasino.Algorithms.Probability;
 using HMMDishonestCasino.Casino;
@@ -101,7 +100,7 @@ namespace HMMDishonestCasino
             {
                 dataGridView1.Rows.Add(casino.History[index].Result, viterbiAlgorithm.Output[index],
                     casino.History[index].StateSpace
-                    /*, aposterioriAlgorithm.Output[index]*/);
+                    , aposterioriAlgorithm.Output[index]);
             }
 
             var sumOfViterbiMatches = 0.0;
@@ -109,7 +108,7 @@ namespace HMMDishonestCasino
             for (var i = 0; i < casino.History.Count; i++)
             {
                 sumOfViterbiMatches += casino.History[i].StateSpace == viterbiAlgorithm.Output[i] ? 1 : 0;
-                //sumOfAposterioriMatches += (casino.History[i].StateSpace == aposterioriAlgorithm.Output[i]) ? 1 : 0;
+                sumOfAposterioriMatches += casino.History[i].StateSpace == aposterioriAlgorithm.Output[i] ? 1 : 0;
             }
 
             MessageBox.Show(

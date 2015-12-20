@@ -30,7 +30,7 @@ namespace HMMDishonestCasino.Algorithms.Probability
                 foreach (var kState in StateSpace)
                 {
                     fb[kState][i] = EmissionMatrix[kState, SequenceOfObservations[i]]*
-                                   StateSpace.Sum(lState => fb[lState][i - 1]*TransitionMatrix[lState, kState]);
+                                    StateSpace.Sum(lState => fb[lState][i - 1]*TransitionMatrix[lState, kState]);
                 }
             }
         }

@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 
-namespace HMMDishonestCasino.Algorithms
+namespace HMMDishonestCasino.Algorithms.Probability
 {
     internal abstract class ProbabilityCalculatingAlgorithm<TObservation, TState> : BaseAlgorithm<TObservation, TState>
     {
-        protected Dictionary<TState, double[]> fb;
-
-        public ProbabilityCalculatingAlgorithm()
+        protected ProbabilityCalculatingAlgorithm()
         {
         }
 
-        public ProbabilityCalculatingAlgorithm(BaseAlgorithm<TObservation, TState> baseAlgorithm) : base(baseAlgorithm)
+        protected ProbabilityCalculatingAlgorithm(BaseAlgorithm<TObservation, TState> baseAlgorithm)
+            : base(baseAlgorithm)
         {
         }
+
+        public Dictionary<TState, double[]> fb { get; set; }
 
         public override void DoWork()
         {

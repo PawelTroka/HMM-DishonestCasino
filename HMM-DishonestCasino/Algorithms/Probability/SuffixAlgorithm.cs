@@ -42,7 +42,8 @@ namespace HMMDishonestCasino.Algorithms.Probability
             return
                 StateSpace.Sum(
                     state =>
-                        InitialProbabilitiesOfStates[state]*EmissionMatrix[state, SequenceOfObservations[0]]*fb[state][0]);
+                        InitialProbabilitiesOfStates[state]*EmissionMatrix[state, SequenceOfObservations[0]]*
+                        fb[state][0]);
         }
     }
 }

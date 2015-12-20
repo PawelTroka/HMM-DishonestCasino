@@ -13,9 +13,9 @@ namespace HMMDishonestCasino.Casino
         private readonly Dice fairDice;
 
         private readonly Random random;
+        private readonly double TOLERANCE = 0.01;
 
         private Dice currentDice;
-        private readonly double TOLERANCE = 0.01;
 
         public DishonestCasino()
         {
