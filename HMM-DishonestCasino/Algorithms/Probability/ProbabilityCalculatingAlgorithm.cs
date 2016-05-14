@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace HMMDishonestCasino.Algorithms.Probability
@@ -13,7 +14,8 @@ namespace HMMDishonestCasino.Algorithms.Probability
         {
         }
 
-        public Dictionary<TState, double[]> fb { get; set; }
+        public Dictionary<TState, double[]> fb { get; private set; }
+
 
         public override void DoWork()
         {
@@ -23,6 +25,16 @@ namespace HMMDishonestCasino.Algorithms.Probability
             {
                 fb[state] = new double[T];
             }
+        }
+
+        protected double log(double x)
+        {
+            return Math.Log(x);
+        }
+
+        protected double antilog(double x)
+        {
+            return Math.Exp(x); //Math.Pow(10, x);
         }
 
         public abstract double P();
