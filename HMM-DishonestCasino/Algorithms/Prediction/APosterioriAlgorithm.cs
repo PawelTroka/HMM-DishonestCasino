@@ -11,7 +11,8 @@ namespace HMMDishonestCasino.Algorithms.Prediction
      * Mark Stamp∗
      * Associate Professor
      * Department of Computer Science
-     * San Jose State University     * April 26, 2012
+     * San Jose State University
+     * April 26, 2012
      */
 
     public class APosterioriAlgorithm<TObservation, TState> : PredictionAlgorithm<TObservation, TState>
@@ -55,24 +56,30 @@ namespace HMMDishonestCasino.Algorithms.Prediction
         {
             base.DoWork();
 
-           /* suffixAlgorithm = new SuffixAlgorithm<TObservation, TState>(this);
-            prefixAlgorithm = new PrefixAlgorithm<TObservation, TState>(this);
-            suffixAlgorithm.DoWork();
-            prefixAlgorithm.DoWork();*/
+            AlphaPass();
+            BetaPass();
 
-            AlphaPass();BetaPass();
-
-            var probabilitySuffix = StateSpace.Sum(
-                    state =>
-                        InitialProbabilitiesOfStates[state] * EmissionMatrix[state, SequenceOfObservations[0]] *
-                        beta[state][0]); //suffixAlgorithm.P();
-            var probabilityPrefix = StateSpace.Sum(state => alpha[state][T - 1]);//prefixAlgorithm.P();
+            _probabilitySuffix = StateSpace.Sum(
+                state =>
+                    InitialProbabilitiesOfStates[state] * EmissionMatrix[state, SequenceOfObservations[0]] *
+                    beta[state][0]);
+            _probabilityPrefix = StateSpace.Sum(state => alpha[state][T - 1]);
 
             var TOLERANCE = 1e-3;
-            if (Math.Abs((probabilitySuffix - probabilityPrefix)/probabilityPrefix) > TOLERANCE)
+            if (Math.Abs((_probabilitySuffix - _probabilityPrefix)/_probabilityPrefix) > TOLERANCE)
                 throw new Exception("Probabilities are not equal");
 
-            var probability = (probabilitySuffix + probabilityPrefix)/2.0;
+            // Probability = (_probabilitySuffix + _probabilityPrefix)/2.0;
+
+            LogProbability = 0.0;
+
+
+            for (int i = 0; i < T; i++)
+            {
+                LogProbability -= Math.Log(c[i]);
+            }
+            Probability = Math.Exp(LogProbability);
+
             Output = new TState[T];
 
             for (var i = 0; i < T; i++)
@@ -88,6 +95,12 @@ namespace HMMDishonestCasino.Algorithms.Prediction
         }
 
         private readonly double[] c;
+        private double _probabilitySuffix;
+        private double _probabilityPrefix;
+        public double Probability { get; private set; }
+
+        public double LogProbability { get; private set; }
+
 
         private void AlphaPass()
         {
@@ -110,7 +123,6 @@ namespace HMMDishonestCasino.Algorithms.Prediction
             // compute αt(i)
             for (var t = 1; t < T; t++)
             {
-
                 c[t] = 0;
                 foreach (var iState in StateSpace)
                 {

@@ -112,7 +112,7 @@ namespace HMMDishonestCasino
             }
 
             MessageBox.Show(
-                $"Viterbi match = {100*sumOfViterbiMatches/casino.History.Count}%\nAPosteriori match = {100*sumOfAposterioriMatches/casino.History.Count}%\nPrefix probability = {100*prefixAlgorithm.P()}%\nSuffix probability = {100*suffixAlgorithm.P()}%");
+                $"Viterbi match = {100*sumOfViterbiMatches/casino.History.Count}%\nAPosteriori match = {100*sumOfAposterioriMatches/casino.History.Count}%\nSequence probability = {100*(aposterioriAlgorithm as APosterioriAlgorithm<int, StateSpace>).Probability}\nLog(probability) = {100 * (aposterioriAlgorithm as APosterioriAlgorithm<int, StateSpace>).LogProbability}");
         }
 
         private void InitAlgorithms()
